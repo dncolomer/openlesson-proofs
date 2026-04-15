@@ -1,6 +1,6 @@
 # OpenLesson Proof Anchor
 
-Solana program for anchoring cryptographic proofs of learning activities on-chain. Part of the [OpenLesson](https://openlesson.ai) platform — enables trustless, permanent verification that educational sessions, plans, and analyses actually occurred.
+Solana program for anchoring cryptographic proofs of learning activities on-chain. Part of the [OpenLesson](https://openlesson.academy) platform — enables trustless, permanent verification that educational sessions, plans, and analyses actually occurred.
 
 Every significant learning event (session started, analysis heartbeat, plan created, etc.) produces a SHA-256 fingerprint off-chain. This program stores those fingerprints on Solana, making them publicly verifiable and tamper-proof.
 
