@@ -1,0 +1,24 @@
+{
+  "name": "@openlesson/proof-anchor-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the OpenLesson Proof Anchor Solana program",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/web3.js": "^1.95.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "files": [
+    "dist",
+    "src",
+    "idl"
+  ],
+  "license": "MIT"
+}
