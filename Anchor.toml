@@ -8,6 +8,9 @@ skip-lint = false
 [programs.localnet]
 openlesson_proof_anchor = "6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J"
 
+[programs.devnet]
+openlesson_proof_anchor = "6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J"
+
 [provider]
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"
