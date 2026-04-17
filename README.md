@@ -378,19 +378,48 @@ This program is designed to replace the simulated anchoring in the OpenLesson ag
 
 The database tables (`agent_proofs`, `agent_proof_batches`, `user_solana_wallets`) already exist in the OpenLesson schema (migration `026_agent_v2.sql`).
 
-## Deployment Phases
+## Deployments
+
+| Network     | Status           | Program ID                                     | Explorer                                                                                                            |
+| ----------- | ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **Devnet**  | Live             | `6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J` | [View on Explorer](https://explorer.solana.com/address/6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J?cluster=devnet) |
+| **Mainnet** | Not yet deployed | —                                              | —                                                                                                                   |
+
+**Upgrade Authority:** `6HGeNL5852ykqQNiwT6sC5YFu1xBBwvgtVnUWuf5EfEP` — only this wallet can deploy upgrades to the program.
+
+### Deployment Phases
 
 | Phase                 | Network                                 | Purpose                                                            |
 | --------------------- | --------------------------------------- | ------------------------------------------------------------------ |
-| **Phase 1** (current) | Localnet (`solana-test-validator`)      | Development and testing. No cost, instant transactions.            |
-| **Phase 2**           | Devnet (`api.devnet.solana.com`)        | E2E testing with real network conditions. Free SOL via airdrop.    |
+| **Phase 1**           | Localnet (`solana-test-validator`)      | Development and testing. No cost, instant transactions.            |
+| **Phase 2** (current) | Devnet (`api.devnet.solana.com`)        | E2E testing with real network conditions. Free SOL via airdrop.    |
 | **Phase 3**           | Mainnet (`api.mainnet-beta.solana.com`) | Production. Real proofs, permanent anchoring. OpenLesson pays gas. |
+
+### Upgrading the Program
+
+To deploy a new version (requires the upgrade authority keypair):
+
+```bash
+anchor build
+solana program deploy target/deploy/openlesson_proof_anchor.so \
+  --program-id 6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J \
+  --upgrade-authority <path-to-keypair.json> \
+  --url devnet
+```
+
+### Running the Devnet Smoke Tests
+
+```bash
+npx ts-mocha -p tsconfig.json tests/devnet-smoke.ts --timeout 120000
+```
+
+Tests all 3 instructions against the live devnet deployment: `initialize_user_account`, `anchor_proof`, `anchor_batch`, plus error cases (invalid proof type, duplicate prevention).
 
 ### Environment Variables (for the OpenLesson API)
 
 ```bash
-SOLANA_NETWORK=localnet                    # localnet | devnet | mainnet-beta
-SOLANA_RPC_URL=http://localhost:8899
+SOLANA_NETWORK=devnet                      # localnet | devnet | mainnet-beta
+SOLANA_RPC_URL=https://api.devnet.solana.com
 SOLANA_PROGRAM_ID=6kFPmDutPLRigDcyKaLAtRnDbBZAh7teLfAMQLWhZJ5J
 SOLANA_FEE_PAYER_SECRET_KEY=<base64>       # Fee payer wallet secret key
 SOLANA_WALLET_ENCRYPTION_KEY=<32-byte hex> # AES-256-GCM key for custodial wallets
